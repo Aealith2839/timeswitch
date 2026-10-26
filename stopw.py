@@ -1,4 +1,26 @@
 #!/usr/bin/env python3
+
+# SPDX-License-Identifier: GPL-3.0-only
+#
+# Copyright (C) 2026 Aealith2839
+#
+# stopw originated from Time Switch by Fyodor Sobolev.
+# The interface and behavior were redesigned for stopw in 2026.
+# See CREDITS.md, LICENSING.md and LICENSES/TimeSwitch-original.txt
+# for provenance and the terms covering inherited material.
+#
+# The new stopw contributions are free software: you can redistribute
+# them and/or modify them under the terms of the GNU General Public
+# License as published by the Free Software Foundation, version 3.
+#
+# stopw is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with stopw. If not, see <https://www.gnu.org/licenses/>.
+
 """stopw: a small GTK timer that performs an action when its countdown ends.
 
 Runtime dependencies include PyGObject, GTK 4.10 or newer and libadwaita.
@@ -6,8 +28,10 @@ External actions also require their respective host commands (systemctl,
 notify-send and canberra-gtk-play). Custom commands are interpreted by /bin/sh.
 
 Translation catalogs are loaded from locale/<language>/LC_MESSAGES/stopw.mo.
-This file deliberately makes no licensing claim: verify the upstream license
-and retained code/assets before choosing the project's distribution license.
+
+New stopw contributions are licensed under GPL-3.0-only.
+See COPYING, LICENSING.md and CREDITS.md for licensing and provenance.
+The original Time Switch license is preserved in LICENSES/TimeSwitch-original.txt.
 """
 
 import sys
@@ -924,9 +948,9 @@ class StopwApp(Adw.Application):
             transient_for=self.window, application_name=APP_NAME,
             application_icon="time-symbolic", developer_name="Eric",
             version="0.1.0", comments=_("Minuteur épuré pour GNOME"),
-            # The previous MIT label was unverified. Do not publish a license
-            # assertion until the upstream files and retained assets are audited.
-            license_type=Gtk.License.UNKNOWN)
+            # Display the license selected for the new stopw contributions.
+            # Upstream notices are preserved separately; see LICENSING.md.
+            license_type=Gtk.License.GPL_3_0)
         about.present()
 
 
