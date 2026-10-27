@@ -495,16 +495,22 @@ class StopwWindow(Adw.ApplicationWindow):
     def update_time_display(self):
         """Refresh numbers, selection styling and control availability together."""
         for index, (label, value) in enumerate(zip(
-            (self.lbl_hours, self.lbl_mins, self.lbl_secs),
-            (self.hours, self.minutes, self.seconds),
+                (self.lbl_hours, self.lbl_mins, self.lbl_secs),
+                (self.hours, self.minutes, self.seconds),
         )):
             label.set_text(f"{value:02d}")
             if index == self.active_field:
                 label.add_css_class("active")
             else:
                 label.remove_css_class("active")
+
         self.start_button.set_sensitive(
-            self.is_running() or (self.total_seconds() > 0 and self.has_valid_action()))
+            self.is_running() or (
+                self.total_seconds() > 0
+                and self.action_selected_explicitly
+                and self.has_valid_action()
+            )
+        )
         self.update_action_availability()
 
     def update_action_availability(self):
@@ -691,18 +697,24 @@ class StopwWindow(Adw.ApplicationWindow):
         if self.is_running():
             self.stop_timer()
             return
+
         total = self.total_seconds()
-        if total <= 0 or not self.has_valid_action():
+        if (total <= 0
+                or not self.action_selected_explicitly
+                or not self.has_valid_action()):
             return
+
         self.clear_selection()
         self.remaining_seconds = total
+
         # A monotonic deadline avoids accumulating GLib callback delays.
         # Suspend/resume semantics still need explicit testing and policy.
         self.deadline = GLib.get_monotonic_time() + total * 1_000_000
         self.start_button.set_label(_("Stop"))
         self.start_button.remove_css_class("orange-button")
         self.start_button.add_css_class("red-button")
-        self.running_action_label.set_text(self.running_action_labels[self.current_action])
+        self.running_action_label.set_text(
+            self.running_action_labels[self.current_action])
         self.action_button.set_sensitive(False)
         self.action_stack.set_visible_child_name("running")
         self.save_timer(total)
