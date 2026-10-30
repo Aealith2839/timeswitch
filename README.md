@@ -1,5 +1,11 @@
 # stopw
 
+## Screenshots
+
+| Ready | Running |
+|---|---|
+| ![stopw ready to start](screenshots/main.png | ![stopw countdown running](screenshots/running.png) |
+
 A compact timer for GNOME that performs an action when the countdown ends.
 
 stopw is written in Python using GTK 4 and libadwaita. It focuses on a
